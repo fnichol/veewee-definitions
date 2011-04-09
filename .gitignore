@@ -11,6 +11,9 @@ Gemfile.lock
 # veewee specific downloads
 /iso/*.iso
 
+# veewee built boxes
+*.box
+
 # scm revert files
 **.orig
 
