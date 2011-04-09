@@ -1,0 +1,18 @@
+# bundler state
+/.bundle
+/vendor/bundle/
+
+# veewee specific downloads
+/iso/*.iso
+
+# scm revert files
+**.orig
+
+# mac finder poop
+.DS_Store
+
+# textmate project files
+/*.tmpproj
+
+# vim poop
+**.swp
