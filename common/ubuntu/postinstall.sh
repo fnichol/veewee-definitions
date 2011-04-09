@@ -18,7 +18,7 @@ cp /etc/sudoers /etc/sudoers.orig
 sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 
 # Install chef
-apt-get -u install chef
+apt-get -y install chef
 
 # Install vagrant keys
 mkdir -p /home/vagrant/.ssh
