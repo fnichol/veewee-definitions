@@ -2,6 +2,9 @@
 /.bundle
 /vendor/bundle/
 
+# be nice to strangers, let them set their own .rvmrc
+.rvmrc
+
 # veewee specific downloads
 /iso/*.iso
 
