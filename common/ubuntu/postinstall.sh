@@ -4,7 +4,7 @@ DEBIAN_FRONTEND=noninteractive
 # Add chef apt repository
 echo "deb http://apt.opscode.com/ `lsb_release -cs` main" \
   >/etc/apt/sources.list.d/opscode.list
-curl http://apt.opscode.com/packages@opscode.com.gpg.key | apt-key add -
+wget -q -O- http://apt.opscode.com/packages@opscode.com.gpg.key | apt-key add -
 
 # Update the box
 apt-get -y update
