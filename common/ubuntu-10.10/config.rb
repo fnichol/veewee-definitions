@@ -3,6 +3,8 @@ module VeeWee
     module Ubuntu1010
       def self.config
         {
+          :kickstart_port       => "7123",
+          :ssh_host_port        => "7223",
           :boot_cmd_sequence    => [ 
             '<Tab>',
             'noapic preseed/url=http://%IP%:%PORT%/preseed.cfg ',

@@ -3,7 +3,9 @@ module VeeWee
     module Debian600
       def self.config
         {
-          :boot_cmd_sequence => [
+          :kickstart_port       => "7124",
+          :ssh_host_port        => "7224",
+          :boot_cmd_sequence    => [
              '<Esc>',
              'install ',
              'preseed/url=http://%IP%:%PORT%/preseed.cfg ',
@@ -19,10 +21,10 @@ module VeeWee
              'console-keymaps-at/keymap=us ',
              '<Enter>'
           ],
-          :kickstart_file => "preseed.cfg",
-          :sudo_cmd => "echo '%p'|sudo -S sh '%f'",
-          :shutdown_cmd => "halt -p",
-          :postinstall_files => [ "postinstall.sh" ]
+          :kickstart_file       => "preseed.cfg",
+          :sudo_cmd             => "echo '%p'|sudo -S sh '%f'",
+          :shutdown_cmd         => "halt -p",
+          :postinstall_files    => [ "postinstall.sh" ]
         }
       end
     end
