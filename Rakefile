@@ -4,8 +4,8 @@ ubuntu_defs = {
 }
 
 debian_defs = {
-  :squeeze32  => "debian-6.0.0-i386",
-  :squeeze64  => "debian-6.0.0-amd64"
+  :squeeze32  => "debian-6.0.1a-i386",
+  :squeeze64  => "debian-6.0.1a-amd64"
 }
 
 defs = Hash.new
