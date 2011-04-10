@@ -32,8 +32,8 @@ apt-get -y upgrade
 # The main user (`vagrant` in our case) needs to have **password-less** sudo
 # access as described in the Vagrant base box
 # [documentation](http://vagrantup.com/docs/base_boxes.html#setup_permissions).
-cp /etc/sudoers /etc/sudoers.orig
-sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
+# This user belongs to the `admin` group, so we'll change that line.
+sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
 
 ### Chef and Puppet Packages
 
