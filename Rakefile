@@ -12,8 +12,9 @@ defs = Hash.new
 defs.merge!(ubuntu_defs)
 defs.merge!(debian_defs)
 
+cmd_pre = "bundle exec vagrant basebox"
+
 namespace :build do
-  cmd_pre = "bundle exec vagrant basebox"
 
   defs.each do |tag, definition|
     desc "Builds #{definition} Vagrant base box"
@@ -27,6 +28,15 @@ namespace :build do
   desc "Builds all Vagrant base boxes"
   task :all do
     defs.each { |tag, definition| Rake::Task["build:#{tag.to_s}"].invoke }
+  end
+end
+
+namespace :destroy do
+  defs.each do |tag, definition|
+    desc "Destroys #{definition} Vagrant base box"
+    task tag do
+      sh %{#{cmd_pre} destroy #{definition}}
+    end
   end
 end
 
