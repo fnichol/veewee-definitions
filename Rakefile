@@ -1,5 +1,3 @@
-cmd_pre = "bundle exec vagrant basebox"
-
 ubuntu_defs = {
   :maverick32 => "ubuntu-10.10-server-i386",
   :maverick64 => "ubuntu-10.10-server-amd64"
@@ -8,11 +6,13 @@ ubuntu_defs = {
 defs = Hash.new.merge!(ubuntu_defs)
 
 namespace :build do
+  cmd_pre = "bundle exec vagrant basebox"
+
   defs.each do |tag, definition|
     desc "Builds #{definition} Vagrant base box"
     task tag do
       %w{build export}.each do |goal|
-        %x{#{cmd_pre} #{goal} #{definition}}
+        sh %{#{cmd_pre} #{goal} #{definition}}
       end
     end
   end
