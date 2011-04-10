@@ -3,7 +3,14 @@ ubuntu_defs = {
   :maverick64 => "ubuntu-10.10-server-amd64"
 }
 
-defs = Hash.new.merge!(ubuntu_defs)
+debian_defs = {
+  :squeeze32  => "debian-6.0.0-i386",
+  :squeeze64  => "debian-6.0.0-amd64"
+}
+
+defs = Hash.new
+defs.merge!(ubuntu_defs)
+defs.merge!(debian_defs)
 
 namespace :build do
   cmd_pre = "bundle exec vagrant basebox"
@@ -35,6 +42,13 @@ namespace :list do
   task :ubuntu do
     puts "The list of Ubuntu base box definitions are:\n\n"
     ubuntu_defs.each { |tag, definition| puts "  * #{tag}" }
+    puts "\nTo list all base box definitions, use `rake list:all'\n\n"
+  end
+
+  desc "List all Debian base box definitions"
+  task :debian do
+    puts "The list of Debian base box definitions are:\n\n"
+    debian_defs.each { |tag, definition| puts "  * #{tag}" }
     puts "\nTo list all base box definitions, use `rake list:all'\n\n"
   end
 end
