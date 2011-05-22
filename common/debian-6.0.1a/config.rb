@@ -3,8 +3,8 @@ module VeeWee
     module Debian600
       def self.config
         {
-          :kickstart_port       => "7124",
-          :ssh_host_port        => "7224",
+          :kickstart_port       => "7125",
+          :ssh_host_port        => "7225",
           :boot_cmd_sequence    => [
              '<Esc>',
              'install ',
