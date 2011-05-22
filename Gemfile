@@ -1,4 +1,4 @@
 source "http://rubygems.org"
 
-gem "veewee"
-gem "rspec"
+gem 'veewee'
+gem 'vagrant'
