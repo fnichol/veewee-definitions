@@ -1,6 +1,6 @@
 ubuntu_defs = {
-  :maverick32 => "ubuntu-10.10-server-i386",
-  :maverick64 => "ubuntu-10.10-server-amd64"
+  :maverick32 => "ubuntu-10.10-server-i386-netboot",
+  :maverick64 => "ubuntu-10.10-server-amd64-netboot"
 }
 
 debian_defs = {
