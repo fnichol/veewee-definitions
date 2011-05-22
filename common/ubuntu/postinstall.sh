@@ -11,7 +11,7 @@
 ruby_ver="1.8.7-p334"
 
 # The version of Rubygems to be installed
-rg_ver="1.7.2"
+rg_ver="1.8.3"
 
 # The path to the source-compiled Ruby used for the Chef and Puppet gems
 ruby_home="/opt/vagrant_ruby"
@@ -60,7 +60,7 @@ rm -rf /tmp/ruby-${ruby_ver}*
 #### Compiling Rubygems
 
 # Download and extract the Rubygems source
-(cd /tmp && wget http://production.cf.rubygems.org/rubygems/rubygems-${rg_ver}.tgz)
+(cd /tmp && wget http://files.rubyforge.vm.bytemark.co.uk/rubygems/rubygems-${rg_ver}.tgz)
 (cd /tmp && tar xfz rubygems-${rg_ver}.tgz)
 
 # Setup and install Rubygems
