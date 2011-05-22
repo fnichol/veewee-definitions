@@ -6,8 +6,7 @@ module VeeWee
           :kickstart_port       => "7124",
           :ssh_host_port        => "7224",
           :boot_cmd_sequence    => [ 
-            '<Tab>',
-            'noapic preseed/url=http://%IP%:%PORT%/preseed.cfg ',
+            'install noapic preseed/url=http://%IP%:%PORT%/preseed.cfg ',
             'debian-installer=en_US auto locale=en_US kbd-chooser/method=us ',
             'hostname=%NAME% ',
             'fb=false debconf/frontend=noninteractive ',
