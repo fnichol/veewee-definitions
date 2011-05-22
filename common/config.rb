@@ -6,7 +6,7 @@ module VeeWee
         :memory_size          => '256', 
         :disk_size            => '10140',
         :disk_format          => 'VDI',
-        :disk_size            => '10240',
+        :hostiocache          => 'off',
         :iso_download_timeout => "1000",
         :boot_wait            => "10",
         :kickstart_port       => "7122",
