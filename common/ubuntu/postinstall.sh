@@ -5,25 +5,21 @@
 # If any package install time questions need to be set, you can use
 # `preeseed.cfg` to populate the settings.
 
-### Additional Ubuntu Package Repositories
+### Setup Variables
 
-# There is an Opscode *apt* repository with current builds of chef that
-# only depend on the package installed Ruby. At present, I cannot find
-# a complimentary repository for updated puppet packages and as a result
-# an older "safe" package will be installed from the main Ubuntu *apt*
-# repository.
+# The version of Ruby to be installed supporting the Chef and Puppet gems
+ruby_ver="1.8.7-p334"
 
-# Add the Opscode *apt* repository by creating a `.list` file and adding
-# the repository key
-echo "deb http://apt.opscode.com/ `lsb_release -cs` main" \
-  >/etc/apt/sources.list.d/opscode.list
-wget -q -O- http://apt.opscode.com/packages@opscode.com.gpg.key | apt-key add -
+# The version of Rubygems to be installed
+rg_ver="1.7.2"
 
-# Now update the system with `update` and `upgrade`. The `update` will
-# also fetch the package manifest from any additionally added repositories.
-# The `upgrade` will update any out of date packages but will almost certainly
-# do nothing as we've installed from the netboot installer and all packages
-# should be up to date.
+# The path to the source-compiled Ruby used for the Chef and Puppet gems
+ruby_home="/opt/vagrant_ruby"
+
+# Now update the system with `update` and `upgrade`. The `upgrade` will
+# update any out of date packages but will almost certainly do nothing
+# as we've installed from the netboot installer and all packages should be
+# up to date.
 apt-get -y update
 apt-get -y upgrade
 
@@ -33,31 +29,75 @@ apt-get -y upgrade
 # access as described in the Vagrant base box
 # [documentation](http://vagrantup.com/docs/base_boxes.html#setup_permissions).
 # This user belongs to the `admin` group, so we'll change that line.
+sed -i -e '/Defaults\s\+env_reset/a Defaults\texempt_group=admin' /etc/sudoers
 sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
 
-### Chef and Puppet Packages
+### Installing Ruby
+
+#### Compiling Ruby
+
+# The choice was made by the Vagrant and VeeWee authors to compile a Ruby from
+# source so that the user of this base box can install their own Rubies using
+# packages, RVM, source, etc. It will be installed into $ruby_home so as not
+# to collide with /usr/local.
+#
+# Currently we must install Ruby 1.8 since Puppet doesn't support Ruby 1.9 yet.
+
+# Install packages necessary to compile Ruby from source
+apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev
+
+# Download and extract the Ruby source
+(cd /tmp && wget http://ftp.ruby-lang.org/pub/ruby/ruby-${ruby_ver}.tar.gz)
+(cd /tmp && tar xfz ruby-${ruby_ver}.tar.gz)
+
+# Configure, compile, and install Ruby
+(cd /tmp/ruby-$ruby_ver && ./configure --prefix=$ruby_home)
+(cd /tmp/ruby-$ruby_ver && make && make install)
+
+# Clean up the source artifacts
+rm -rf /tmp/ruby-${ruby_ver}*
+
+#### Compiling Rubygems
+
+# Download and extract the Rubygems source
+(cd /tmp && wget http://production.cf.rubygems.org/rubygems/rubygems-${rg_ver}.tgz)
+(cd /tmp && tar xfz rubygems-${rg_ver}.tgz)
+
+# Setup and install Rubygems
+(cd /tmp/rubygems-$rg_ver && ${ruby_home}/bin/ruby setup.rb)
+
+# Clean up the source artifacts
+rm -rf /tmp/rubygems-${rg_ver}*
+
+### Installing Chef and Puppet Gems
 
 # The Vagrant base box
 # [documentation](http://vagrantup.com/docs/base_boxes.html#boot_and_setup_basic_software)
 # specifies that both the Puppet and Chef gems should be installed to qualify
 # as a complete Vagrant base box.
-export DEBIAN_FRONTEND=noninteractive
-apt-get -y install chef
-apt-get -y install puppet
+${ruby_home}/bin/gem install chef --no-ri --no-rdoc
+${ruby_home}/bin/gem install puppet --no-ri --no-rdoc
+
+# If a packaged Ruby or RVM is installed then the path to the Chef and Puppet
+# binaries will be "lost". To guard against this, we'll add the compiled Ruby's
+# bin directory to PATH.
+echo "PATH=\$PATH:${ruby_home}/bin" >/etc/profile.d/vagrant_ruby.sh
 
 ### Vagrant SSH Keys
 
 # Since Vagrant only supports key-based authentication for SSH, we must
 # set up the vagrant user to use key-based authentication. We can get the
 # public key used by the Vagrant gem directly from its Github repository.
-mkdir -p /home/vagrant/.ssh
-chmod 700 /home/vagrant/.ssh
-(cd /home/vagrant/.ssh &&
+vssh="/home/vagrant/.ssh"
+mkdir -p $vssh
+chmod 700 $vssh
+(cd $vssh &&
   wget --no-check-certificate \
     'https://github.com/mitchellh/vagrant/raw/master/keys/vagrant.pub' \
-    -O /home/vagrant/.ssh/authorized_keys)
-chmod 0600 /home/vagrant/.ssh/authorized_keys
-chown -R vagrant:vagrant /home/vagrant/.ssh
+    -O $vssh/authorized_keys)
+chmod 0600 $vssh/authorized_keys
+chown -R vagrant:vagrant $vssh
+unset vssh
 
 ### VirtualBox Guest Additions
 
@@ -65,9 +105,9 @@ chown -R vagrant:vagrant /home/vagrant/.ssh
 apt-get -y remove virtualbox-ose-guest-dkms
 apt-get -y remove virtualbox-ose-guest-utils
 
-# The Guest Additions installer will require the use of a compiler, so we'll
-# install it for the moment
-apt-get -y install linux-headers-$(uname -r) build-essential
+# The Guest Additions installer will require the use of the linux headers, so
+# we'll install it for the moment
+apt-get -y install linux-headers-$(uname -r)
 
 # Now download the current VirtualBox guest additions from the VirtualBox
 # website, mount, and install it
@@ -81,21 +121,33 @@ umount /mnt
 # Cleanup the downloaded ISO
 rm -f /tmp/VBoxGuestAdditions_$VBOX_VERSION.iso
 
-# Remove the build tools again to keep things pristine
-apt-get -y remove linux-headers-$(uname -r) build-essential
+# Remove the linux headers to keep things pristine
+apt-get -y remove linux-headers-$(uname -r)
 
 ### Misc. Tweaks
+
+# Install NFS client
+apt-get -y install nfs-common
 
 # Tweak sshd to prevent DNS resolution (speed up logins)
 echo 'UseDNS no' >> /etc/ssh/sshd_config
 
 # Customize the message of the day
-echo 'Welcome to your Vagrant-built virtual machine.' > /var/run/motd
+echo 'Welcome to your Vagrant-built virtual machine.' > /etc/motd.tail
 
 ### Clean up
 
+# Remove the build tools to keep things pristine
+apt-get -y remove build-essential
+
 apt-get -y autoremove
 apt-get -y clean
+
+### Compress Image Size
+
+# Zero out the free space to save space in the final image
+dd if=/dev/zero of=/EMPTY bs=1M
+rm -f /EMPTY
 
 exit
 
