@@ -101,6 +101,10 @@ unset vssh
 
 ### VirtualBox Guest Additions
 
+# The netboot installs the VirtualBox support (old) so we have to remove it
+apt-get -y remove virtualbox-ose-guest-dkms
+apt-get -y remove virtualbox-ose-guest-utils
+
 # The Guest Additions installer will require the use of the linux headers, so
 # we'll install it for the moment
 apt-get -y install linux-headers-$(uname -r)
