@@ -88,14 +88,16 @@ echo "PATH=\$PATH:${ruby_home}/bin" >/etc/profile.d/vagrant_ruby.sh
 # Since Vagrant only supports key-based authentication for SSH, we must
 # set up the vagrant user to use key-based authentication. We can get the
 # public key used by the Vagrant gem directly from its Github repository.
-mkdir -p /home/vagrant/.ssh
-chmod 700 /home/vagrant/.ssh
-(cd /home/vagrant/.ssh &&
+vssh="/home/vagrant/.ssh"
+mkdir -p $vssh
+chmod 700 $vssh
+(cd $vssh &&
   wget --no-check-certificate \
     'https://github.com/mitchellh/vagrant/raw/master/keys/vagrant.pub' \
-    -O /home/vagrant/.ssh/authorized_keys)
-chmod 0600 /home/vagrant/.ssh/authorized_keys
-chown -R vagrant:vagrant /home/vagrant/.ssh
+    -O $vssh/authorized_keys)
+chmod 0600 $vssh/authorized_keys
+chown -R vagrant:vagrant $vssh
+unset vssh
 
 ### VirtualBox Guest Additions
 
