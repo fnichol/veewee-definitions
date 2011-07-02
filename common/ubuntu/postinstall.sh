@@ -47,7 +47,7 @@ sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
 apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev
 
 # Download and extract the Ruby source
-(cd /tmp && wget http://ftp.ruby-lang.org/pub/ruby/ruby-${ruby_ver}.tar.gz)
+(cd /tmp && wget http://ftp.ruby-lang.org/pub/ruby/stable/ruby-${ruby_ver}.tar.gz)
 (cd /tmp && tar xfz ruby-${ruby_ver}.tar.gz)
 
 # Configure, compile, and install Ruby
