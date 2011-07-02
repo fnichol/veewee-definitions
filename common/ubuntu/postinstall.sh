@@ -8,7 +8,7 @@
 ### Setup Variables
 
 # The version of Ruby to be installed supporting the Chef and Puppet gems
-ruby_ver="1.8.7-p334"
+ruby_ver="1.8.7-p352"
 
 # The version of Rubygems to be installed
 rg_ver="1.8.3"
