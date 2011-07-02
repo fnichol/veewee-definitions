@@ -23,9 +23,7 @@ namespace :build do
   defs.each do |tag, definition|
     desc "Builds #{definition} Vagrant base box"
     task tag do
-      %w{build export}.each do |goal|
-        sh %{#{cmd_pre} #{goal} #{definition}}
-      end
+      sh %{#{cmd_pre} build #{definition} && #{cmd_pre} export #{definition}}
     end
   end
 
