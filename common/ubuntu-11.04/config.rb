@@ -1,3 +1,9 @@
+#
+# For reference, please see:
+# * https://help.ubuntu.com/11.04/installation-guide/i386/boot-parms.html
+# * https://help.ubuntu.com/11.04/installation-guide/i386/preseed-contents.html
+# * https://help.ubuntu.com/11.04/installation-guide/i386/ch05s01.html
+# * https://help.ubuntu.com/8.04/installation-guide/i386/preseed-using.html
 module VeeWee
   module Common
     module Ubuntu1104
@@ -7,11 +13,22 @@ module VeeWee
           :ssh_host_port        => "7226",
           :boot_cmd_sequence    => [ 
             '<Esc>',
-            'install noapic preseed/url=http://%IP%:%PORT%/preseed.cfg ',
-            'debian-installer=en_US auto locale=en_US kbd-chooser/method=us ',
-            'hostname=%NAME% ',
-            'fb=false debconf/frontend=noninteractive ',
-            'keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false ',
+            'install ',
+            'noapic ',
+            'auto-install/enable ',
+            'console-setup/ask_detect=false ',
+            'console-setup/layoutcode=us ',
+            'console-setup/modelcode=pc105 ',
+            'debconf/frontend=noninteractive ',
+            'debconf/priority=critical ',
+            'debian-installer/locale=en_US ',
+            'debian-installer/framebuffer=false ',
+            'kbd-chooser/method=us ',
+            'netcfg/choose_interface=auto ',
+            'netcfg/dhcp_timeout=60 ',
+            'netcfg/get_hostname=%NAME% ',
+            'preseed/interactive=false ',
+            'preseed/url=http://%IP%:%PORT%/preseed.cfg ',
             ' -- <Enter>' 
           ],
           :kickstart_file       => "preseed.cfg",
