@@ -148,7 +148,7 @@ apt-get -y autoremove
 apt-get -y clean
 
 # Removing leftover leases and persistent rules
-rm /var/lib/dhcp3/*
+rm -f /var/lib/dhcp3/*
 
 # Make sure Udev doesn't block our network, see: http://6.ptmc.org/?p=164
 rm /etc/udev/rules.d/70-persistent-net.rules
