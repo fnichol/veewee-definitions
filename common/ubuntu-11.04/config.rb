@@ -29,6 +29,8 @@ module VeeWee
             'netcfg/get_hostname=%NAME% ',
             'preseed/interactive=false ',
             'preseed/url=http://%IP%:%PORT%/preseed.cfg ',
+            'vga=normal ',
+            'DEBCONF_DEBUG=5 ',
             ' -- <Enter>' 
           ],
           :kickstart_file       => "preseed.cfg",
