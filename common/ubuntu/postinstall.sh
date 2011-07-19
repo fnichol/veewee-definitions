@@ -123,7 +123,7 @@ umount /mnt
 rm -f /tmp/VBoxGuestAdditions_$VBOX_VERSION.iso
 
 # Remove the linux headers to keep things pristine
-apt-get -y remove linux-headers-$(uname -r)
+apt-get -y remove linux-headers-$(uname -r) build-essential
 
 ### Misc. Tweaks
 
