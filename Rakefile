@@ -23,7 +23,11 @@ namespace :build do
   defs.each do |tag, definition|
     desc "Builds #{definition} Vagrant base box"
     task tag do
-      sh %{#{cmd_pre} build #{definition} && #{cmd_pre} export #{definition}}
+      sh [
+        %{#{cmd_pre} build #{definition}},
+        %{#{cmd_pre} export #{definition}},
+        %{mv #{definition}.box #{definition}-#{Time.now.strftime("%Y%m%d")}.box}
+      ].join(" && ")
     end
   end
 
