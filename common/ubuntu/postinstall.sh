@@ -16,12 +16,15 @@ rg_ver="1.8.5"
 # The path to the source-compiled Ruby used for the Chef and Puppet gems
 ruby_home="/opt/vagrant_ruby"
 
-# Now update the system with `update` and `upgrade`. The `upgrade` will
-# update any out of date packages but will almost certainly do nothing
-# as we've installed from the netboot installer and all packages should be
-# up to date.
-apt-get -y update
-apt-get -y upgrade
+# The non-root user that will be created. By vagrant conventions, this should
+# be `"vagrant"`.
+account="vagrant"
+
+# Enable truly non interactive apt-get installs
+export DEBIAN_FRONTEND=noninteractive
+
+# Run the script in debug mode
+set -x
 
 ### Customize Sudoers
 
@@ -89,7 +92,7 @@ echo "PATH=\$PATH:${ruby_home}/bin" >/etc/profile.d/vagrant_ruby.sh
 # Since Vagrant only supports key-based authentication for SSH, we must
 # set up the vagrant user to use key-based authentication. We can get the
 # public key used by the Vagrant gem directly from its Github repository.
-vssh="/home/vagrant/.ssh"
+vssh="/home/${account}/.ssh"
 mkdir -p $vssh
 chmod 700 $vssh
 (cd $vssh &&
@@ -97,7 +100,7 @@ chmod 700 $vssh
     'https://github.com/mitchellh/vagrant/raw/master/keys/vagrant.pub' \
     -O $vssh/authorized_keys)
 chmod 0600 $vssh/authorized_keys
-chown -R vagrant:vagrant $vssh
+chown -R ${account}:vagrant $vssh
 unset vssh
 
 ### VirtualBox Guest Additions
@@ -112,7 +115,7 @@ apt-get -y install linux-headers-$(uname -r)
 
 # Now download the current VirtualBox guest additions from the VirtualBox
 # website, mount, and install it
-VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
+VBOX_VERSION=$(cat /home/${account}/.vbox_version)
 (cd /tmp &&
   wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso)
 mount -o loop /tmp/VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
