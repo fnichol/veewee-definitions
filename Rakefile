@@ -8,8 +8,8 @@ ubuntu_defs = {
 }
 
 debian_defs = {
-  :squeeze32  => "debian-6.0.1a-i386-netboot",
-  :squeeze64  => "debian-6.0.1a-amd64-netboot"
+  :squeeze32  => "debian-6.0.2-i386-netboot",
+  :squeeze64  => "debian-6.0.2-amd64-netboot"
 }
 
 defs = Hash.new
