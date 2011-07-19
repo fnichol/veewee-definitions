@@ -41,7 +41,8 @@ sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 # packages, RVM, source, etc. It will be installed into $ruby_home so as not
 # to collide with /usr/local.
 #
-# Currently we must install Ruby 1.8 since Puppet doesn't support Ruby 1.9 yet.
+# Currently we must install Ruby 1.8 since Puppet doesn't fully support Ruby
+# 1.9 yet.
 
 # Install packages necessary to compile Ruby from source
 apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev
