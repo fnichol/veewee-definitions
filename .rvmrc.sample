@@ -3,7 +3,7 @@
 # This is an RVM Project .rvmrc file, used to automatically load the ruby
 # development environment upon cd'ing into the directory
 
-environment_id="ruby-1.9.2-p180@veewee-definitions"
+environment_id="ruby-1.9.2@veewee-definitions"
 
 #
 # First we attempt to load the desired environment directly from the environment
