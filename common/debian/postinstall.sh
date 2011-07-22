@@ -139,6 +139,9 @@ echo 'UseDNS no' >> /etc/ssh/sshd_config
 # Customize the message of the day
 echo 'Welcome to your Vagrant-built virtual machine.' > /var/run/motd
 
+# Record when the basebox was built
+date > /etc/vagrant_box_build_time
+
 ### Clean up
 
 # Remove the build tools to keep things pristine
