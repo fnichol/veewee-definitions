@@ -5,9 +5,6 @@
 # be nice to strangers, let them set their own .rvmrc
 .rvmrc
 
-# like authoring a gem, don't include Gemfile.lock
-Gemfile.lock
-
 # veewee specific downloads
 /iso/*.iso
 
