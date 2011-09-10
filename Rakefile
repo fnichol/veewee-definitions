@@ -1,10 +1,11 @@
 ubuntu_defs = {
-  :lucid32    => "ubuntu-10.04-server-i386-netboot",
-  :lucid64    => "ubuntu-10.04-server-amd64-netboot",
-  :maverick32 => "ubuntu-10.10-server-i386-netboot",
-  :maverick64 => "ubuntu-10.10-server-amd64-netboot",
-  :natty32    => "ubuntu-11.04-server-i386-netboot",
-  :natty64    => "ubuntu-11.04-server-amd64-netboot"
+  :lucid32            => "ubuntu-10.04-server-i386-netboot",
+  :lucid64            => "ubuntu-10.04-server-amd64-netboot",
+  :maverick32         => "ubuntu-10.10-server-i386-netboot",
+  :maverick32_aptruby => "ubuntu-10.10-server-i386-netboot-aptruby",
+  :maverick64         => "ubuntu-10.10-server-amd64-netboot",
+  :natty32            => "ubuntu-11.04-server-i386-netboot",
+  :natty64            => "ubuntu-11.04-server-amd64-netboot"
 }
 
 debian_defs = {
