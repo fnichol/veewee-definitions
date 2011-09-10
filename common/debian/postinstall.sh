@@ -13,7 +13,7 @@ ruby_ver="1.8.7-p352"
 # The version of Rubygems to be installed
 rg_ver="1.8.5"
 
-# The path to the source-compiled Ruby used for the Chef and Puppet gems
+# The base path to the Ruby used for the Chef and Puppet gems
 ruby_home="/opt/vagrant_ruby"
 
 # The non-root user that will be created. By vagrant conventions, this should
@@ -51,7 +51,7 @@ sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev
 
 # Download and extract the Ruby source
-(cd /tmp && wget http://ftp.ruby-lang.org/pub/ruby/ruby-${ruby_ver}.tar.gz)
+(cd /tmp && wget http://ftp.ruby-lang.org/pub/ruby/stable/ruby-${ruby_ver}.tar.gz)
 (cd /tmp && tar xfz ruby-${ruby_ver}.tar.gz)
 
 # Configure, compile, and install Ruby

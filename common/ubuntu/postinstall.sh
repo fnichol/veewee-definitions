@@ -13,7 +13,7 @@ ruby_ver="1.8.7-p352"
 # The version of Rubygems to be installed
 rg_ver="1.8.5"
 
-# The path to the source-compiled Ruby used for the Chef and Puppet gems
+# The base path to the Ruby used for the Chef and Puppet gems
 ruby_home="/opt/vagrant_ruby"
 
 # The non-root user that will be created. By vagrant conventions, this should
