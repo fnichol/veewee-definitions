@@ -48,7 +48,7 @@ sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
 # 1.9 yet.
 
 # Install packages necessary to compile Ruby from source
-apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev
+apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev make
 
 # Download and extract the Ruby source
 (cd /tmp && wget http://ftp.ruby-lang.org/pub/ruby/stable/ruby-${ruby_ver}.tar.gz)

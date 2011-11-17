@@ -39,7 +39,7 @@ sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
 
 # Install ruby and other packages necessary to build basic gems
 apt-get -y install ruby ruby-dev libopenssl-ruby rdoc ri irb \
-  build-essential zlib1g-dev libssl-dev libreadline5-dev
+  build-essential zlib1g-dev libssl-dev libreadline5-dev make
 
 #### Compiling Rubygems
 
