@@ -73,7 +73,7 @@ mkdir -p $vssh
 chmod 700 $vssh
 (cd $vssh &&
   wget --no-check-certificate \
-    'https://github.com/mitchellh/vagrant/raw/master/keys/vagrant.pub' \
+    'https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub' \
     -O $vssh/authorized_keys)
 chmod 0600 $vssh/authorized_keys
 chown -R ${account}:vagrant $vssh
