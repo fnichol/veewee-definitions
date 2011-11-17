@@ -56,6 +56,9 @@ rm -rf /tmp/rubygems-${rg_ver}*
 
 ### Installing Chef and Puppet Gems
 
+# Install prerequisite gems used by Chef and Puppet
+${ruby_home}/bin/gem install polyglot net-ssh-gateway mime-types --no-ri --no-rdoc
+
 # The Vagrant base box
 # [documentation](http://vagrantup.com/docs/base_boxes.html#boot_and_setup_basic_software)
 # specifies that both the Puppet and Chef gems should be installed to qualify
