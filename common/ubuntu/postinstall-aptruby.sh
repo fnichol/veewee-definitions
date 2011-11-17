@@ -11,7 +11,7 @@
 ### Setup Variables
 
 # The version of Rubygems to be installed
-rg_ver="1.8.5"
+rg_ver="1.8.11"
 
 # The base path to the Ruby used for the Chef and Puppet gems
 ruby_home="/usr"
