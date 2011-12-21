@@ -5,7 +5,9 @@ ubuntu_defs = {
   :maverick32_aptruby => "ubuntu-10.10-server-i386-netboot-aptruby",
   :maverick64         => "ubuntu-10.10-server-amd64-netboot",
   :natty32            => "ubuntu-11.04-server-i386-netboot",
-  :natty64            => "ubuntu-11.04-server-amd64-netboot"
+  :natty64            => "ubuntu-11.04-server-amd64-netboot",
+  :oneiric32          => "ubuntu-11.10-server-i386-netboot",
+  :oneiric64          => "ubuntu-11.10-server-amd64-netboot",
 }
 
 debian_defs = {
