@@ -11,7 +11,7 @@
 ruby_ver="1.8.7-p352"
 
 # The version of Rubygems to be installed
-rg_ver="1.8.11"
+rg_ver="1.8.12"
 
 # The base path to the Ruby used for the Chef and Puppet gems
 ruby_home="/opt/vagrant_ruby"
