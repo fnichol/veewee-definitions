@@ -11,7 +11,7 @@ module VeeWee
         {
           :kickstart_port       => "7124",
           :ssh_host_port        => "7224",
-          :boot_cmd_sequence    => [ 
+          :boot_cmd_sequence    => [
             'install ',
             'noapic ',
             'auto-install/enable ',
@@ -30,7 +30,7 @@ module VeeWee
             'preseed/url=http://%IP%:%PORT%/preseed.cfg ',
             'vga=normal ',
             'DEBCONF_DEBUG=5 ',
-            ' -- <Enter>' 
+            ' -- <Enter>'
           ],
           :kickstart_file       => "preseed.cfg",
           :sudo_cmd             => "echo '%p'|sudo -S sh '%f'",

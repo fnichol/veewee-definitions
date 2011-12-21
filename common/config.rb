@@ -3,7 +3,7 @@ module VeeWee
     def self.config
       {
         :cpu_count            => '1',
-        :memory_size          => '256', 
+        :memory_size          => '256',
         :disk_size            => '10140',
         :disk_format          => 'VDI',
         :hostiocache          => 'off',
