@@ -4,9 +4,9 @@ end
 
 Veewee::Session.declare(
   VeeWee::Common.config.merge(VeeWee::Common::Debian600.config).merge(
-    :os_type_id => 'Debian_64',
-    :iso_file => "debian-6.0.2.1-amd64-netinst.iso",
-    :iso_src => "http://cdimage.debian.org/debian-cd/6.0.2.1/amd64/iso-cd/debian-6.0.2.1-amd64-netinst.iso",
-    :iso_md5 => "25f23779f2f967b4b9497cc0fc80a42d"
+    :os_type_id => 'Debian',
+    :iso_file => "debian-6.0.3-i386-netinst.iso",
+    :iso_src => "http://cdimage.debian.org/debian-cd/6.0.3/i386/iso-cd/debian-6.0.3-i386-netinst.iso",
+    :iso_md5 => "bf10748a0b867912727b248d2e21e8ba"
   )
 )
