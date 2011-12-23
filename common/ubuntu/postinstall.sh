@@ -10,9 +10,6 @@
 # The version of Ruby to be installed supporting the Chef and Puppet gems
 ruby_ver="1.8.7-p352"
 
-# The version of Rubygems to be installed
-rg_ver="1.8.12"
-
 # The base path to the Ruby used for the Chef and Puppet gems
 ruby_home="/opt/vagrant_ruby"
 
@@ -48,30 +45,14 @@ sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
 # 1.9 yet.
 
 # Install packages necessary to compile Ruby from source
-apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev make
+apt-get -y install build-essential zlib1g-dev libssl-dev libreadline-dev make curl git-core
 
-# Download and extract the Ruby source
-(cd /tmp && wget http://ftp.ruby-lang.org/pub/ruby/stable/ruby-${ruby_ver}.tar.gz)
-(cd /tmp && tar xfz ruby-${ruby_ver}.tar.gz)
-
-# Configure, compile, and install Ruby
-(cd /tmp/ruby-$ruby_ver && ./configure --prefix=$ruby_home)
-(cd /tmp/ruby-$ruby_ver && make && make install)
-
-# Clean up the source artifacts
-rm -rf /tmp/ruby-${ruby_ver}*
-
-#### Compiling Rubygems
-
-# Download and extract the Rubygems source
-(cd /tmp && wget http://files.rubyforge.vm.bytemark.co.uk/rubygems/rubygems-${rg_ver}.tgz)
-(cd /tmp && tar xfz rubygems-${rg_ver}.tgz)
-
-# Setup and install Rubygems
-(cd /tmp/rubygems-$rg_ver && ${ruby_home}/bin/ruby setup.rb)
-
-# Clean up the source artifacts
-rm -rf /tmp/rubygems-${rg_ver}*
+# Use ruby-build to install Ruby
+clone_dir=/tmp/ruby-build-$$
+git clone https://github.com/sstephenson/ruby-build.git $clone_dir
+$clone_dir/bin/ruby-build "$ruby_ver" "$ruby_home"
+rm -rf $clone_dir
+unset clone_dir
 
 ### Installing Chef and Puppet Gems
 
@@ -129,7 +110,7 @@ umount /mnt
 rm -f /tmp/VBoxGuestAdditions_$VBOX_VERSION.iso
 
 # Remove the linux headers to keep things pristine
-apt-get -y remove linux-headers-$(uname -r) build-essential
+apt-get -y remove linux-headers-$(uname -r)
 
 ### Misc. Tweaks
 
@@ -148,7 +129,7 @@ date > /etc/vagrant_box_build_time
 ### Clean up
 
 # Remove the build tools to keep things pristine
-apt-get -y remove build-essential
+apt-get -y remove build-essential make curl git-core
 
 apt-get -y autoremove
 apt-get -y clean
