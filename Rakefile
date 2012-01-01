@@ -36,6 +36,16 @@ namespace :build do
   task :all do
     defs.each { |tag, definition| Rake::Task["build:#{tag.to_s}"].invoke }
   end
+
+  desc "Builds all Ubuntu base boxes"
+  task :ubuntu do
+    ubuntu_defs.each { |tag, definition| Rake::Task["build:#{tag.to_s}"].invoke }
+  end
+
+  desc "Builds all Debian base boxes"
+  task :debian do
+    debian_defs.each { |tag, definition| Rake::Task["build:#{tag.to_s}"].invoke }
+  end
 end
 
 namespace :destroy do
