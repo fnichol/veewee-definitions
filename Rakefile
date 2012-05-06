@@ -8,6 +8,8 @@ ubuntu_defs = {
   :natty64            => "ubuntu-11.04-server-amd64-netboot",
   :oneiric32          => "ubuntu-11.10-server-i386-netboot",
   :oneiric64          => "ubuntu-11.10-server-amd64-netboot",
+  :precise32          => "ubuntu-12.04-server-i386-netboot",
+  :precise64          => "ubuntu-12.04-server-amd64-netboot",
 }
 
 debian_defs = {
