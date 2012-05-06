@@ -1,3 +1,3 @@
 source "http://rubygems.org"
 
-gem 'veewee'
+gem 'veewee', '0.3.0.alpha9'
