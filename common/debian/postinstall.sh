@@ -1,6 +1,6 @@
-# **postinstall.sh** is a script executed after Ubuntu has been installed and
-# restarted. There is no user interaction so all commands must be able to run
-# in a non-interactive mode.
+# **postinstall.sh** is a script executed after Debian/Ubuntu has been
+# installed and restarted. There is no user interaction so all commands must
+# be able to run in a non-interactive mode.
 #
 # If any package install time questions need to be set, you can use
 # `preeseed.cfg` to populate the settings.
@@ -20,6 +20,10 @@ account="vagrant"
 # Enable truly non interactive apt-get installs
 export DEBIAN_FRONTEND=noninteractive
 
+# Determine the platform (i.e. Debian or Ubuntu) and platform version
+platform="$(lsb_release -i -s)"
+platform_version="$(lsb_release -s -r)"
+
 # Run the script in debug mode
 set -x
 
@@ -28,9 +32,16 @@ set -x
 # The main user (`vagrant` in our case) needs to have **password-less** sudo
 # access as described in the Vagrant base box
 # [documentation](http://vagrantup.com/docs/base_boxes.html#setup_permissions).
-# This user belongs to the `admin` group, so we'll change that line.
+# This user belongs to the `admin`/`sudo` group, so we'll change that line.
 sed -i -e '/Defaults\s\+env_reset/a Defaults\texempt_group=admin' /etc/sudoers
-sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
+case "$platform" in
+  Debian)
+    sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
+    ;;
+  Ubuntu)
+    sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
+    ;;
+esac
 
 ### Installing Ruby
 
@@ -45,7 +56,16 @@ sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 # 1.9 yet.
 
 # Install packages necessary to compile Ruby from source
-apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev make curl git-core
+case "$platform" in
+  Debian)
+    apt-get -y install build-essential zlib1g-dev libssl-dev \
+      libreadline5-dev make curl git-core
+    ;;
+  Ubuntu)
+    apt-get -y install build-essential zlib1g-dev libssl-dev \
+      libreadline-dev make curl git-core
+    ;;
+esac
 
 # Use ruby-build to install Ruby
 clone_dir=/tmp/ruby-build-$$
@@ -121,7 +141,14 @@ apt-get -y install nfs-common
 echo 'UseDNS no' >> /etc/ssh/sshd_config
 
 # Customize the message of the day
-echo 'Welcome to your Vagrant-built virtual machine.' > /var/run/motd
+case "$platform" in
+  Debian)
+    echo 'Welcome to your Vagrant-built virtual machine.' > /var/run/motd
+    ;;
+  Ubuntu)
+    echo 'Welcome to your Vagrant-built virtual machine.' > /etc/motd.tail
+    ;;
+esac
 
 # Record when the basebox was built
 date > /etc/vagrant_box_build_time

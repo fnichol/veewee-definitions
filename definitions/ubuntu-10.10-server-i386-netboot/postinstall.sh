@@ -1,1 +1,1 @@
-../../common/ubuntu/postinstall.sh
+../../common/debian/postinstall.sh
