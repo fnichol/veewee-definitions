@@ -39,6 +39,8 @@ case "$platform" in
     sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
     ;;
   Ubuntu)
+    groupadd -r admin || true
+    usermod -a -G admin $account
     sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
     ;;
 esac
