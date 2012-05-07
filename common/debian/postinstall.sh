@@ -119,17 +119,15 @@ apt-get -y remove virtualbox-ose-guest-utils
 # we'll install it for the moment
 apt-get -y install linux-headers-$(uname -r)
 
-# Now download the current VirtualBox guest additions from the VirtualBox
-# website, mount, and install it
+# Now use the current VirtualBox guest additions that VeeWee uploaded, mount,
+# and install it
 VBOX_VERSION=$(cat /home/${account}/.vbox_version)
-(cd /tmp &&
-  wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso)
-mount -o loop /tmp/VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
+mount -o loop /home/$account/VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
 yes|sh /mnt/VBoxLinuxAdditions.run
 umount /mnt
 
 # Cleanup the downloaded ISO
-rm -f /tmp/VBoxGuestAdditions_$VBOX_VERSION.iso
+rm -f /home/$account/VBoxGuestAdditions_$VBOX_VERSION.iso
 
 # Remove the linux headers to keep things pristine
 apt-get -y remove linux-headers-$(uname -r)
@@ -174,6 +172,9 @@ rm /lib/udev/rules.d/75-persistent-net-generator.rules
 
 # Add a 2 sec delay to the interface up, to make the dhclient happy
 echo "pre-up sleep 2" >> /etc/network/interfaces
+
+# Remove any temporary work files, including the postinstall.sh script
+rm -f /home/${account}/{*.iso,postinstall*.sh}
 
 ### Compress Image Size
 
