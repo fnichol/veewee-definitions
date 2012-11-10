@@ -17,9 +17,14 @@ debian_defs = {
   :squeeze64  => "debian-6.0.3-amd64-netboot"
 }
 
+other_defs = {
+  :blank64 => "blank-amd64"
+}
+
 defs = Hash.new
 defs.merge!(ubuntu_defs)
 defs.merge!(debian_defs)
+defs.merge!(other_defs)
 
 cmd_pre = "bundle exec vagrant basebox"
 
@@ -78,6 +83,13 @@ namespace :list do
   task :debian do
     puts "The list of Debian base box definitions are:\n\n"
     debian_defs.each { |tag, definition| puts "  * #{tag}" }
+    puts "\nTo list all base box definitions, use `rake list:all'\n\n"
+  end
+
+  desc "List all Other base box definitions"
+  task :other do
+    puts "The list of Other base box definitions are:\n\n"
+    other_defs.each { |tag, definition| puts "  * #{tag}" }
     puts "\nTo list all base box definitions, use `rake list:all'\n\n"
   end
 end
